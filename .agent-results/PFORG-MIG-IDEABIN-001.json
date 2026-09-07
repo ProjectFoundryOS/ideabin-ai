@@ -68,8 +68,8 @@
     "docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md",
     ".agent-results/PFORG-MIG-IDEABIN-001.json"
   ],
-  "pr_number": null,
-  "pr_url": null,
+  "pr_number": 18,
+  "pr_url": "https://github.com/TheRealSynth/ideabin-ai/pull/18",
   "proposed_follow_up_missions": [
     "PFORG-MIG-AMC-005 (agent-mission-control): land the control-plane repository registry/alias mechanism so control/PROJECTS.yaml's ideabin entry and the dispatcher's GitHub access resolve correctly across the staged, mixed-owner migration window.",
     "Owner action: extend the Mission Control dispatcher's GitHub App/token scope to ProjectFoundryOS before or as part of the actual transfer, per docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md's remaining owner actions.",
