@@ -6,7 +6,7 @@
   "target_repo": "TheRealSynth/ideabin-ai",
   "target_branch": "claude/claude-seat-1/pforg-mig-ideabin-001",
   "base_sha": "d166788c33c90ad7e78332c38de402c7104c1100",
-  "final_sha": "d34e1a6e2b37723e24e6d82f28566190dc3e67d2",
+  "final_sha": "fbbb4bd1be76b5ce4a9172474d505341bd930145",
   "state": "DONE_PENDING_MERGE",
   "benchmark_id": "PFORG-MIG-TOP5",
   "benchmark_progress": "ideabin-ai is the second of the five-repository ProjectFoundryOS migration cohort to reach a documented readiness verdict (READY_AFTER_OWNER_ACTION), following the same audit pattern (hazard inventory, reversible fixes, remaining owner actions, post-transfer validation, rollback) expected across the cohort. Cross-repo control-plane portability remains tracked separately in agent-mission-control's PFORG-MIG-AMC-005.",
