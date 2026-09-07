@@ -1,0 +1,124 @@
+{
+  "mission_id": "PFORG-MIG-IDEABIN-001",
+  "lease_id": "c7e87770-be82-4806-bc3c-da6449043779",
+  "worker": "claude-seat-1",
+  "result_contract_version": 3,
+  "target_repo": "TheRealSynth/ideabin-ai",
+  "target_branch": "claude/claude-seat-1/pforg-mig-ideabin-001",
+  "base_sha": "d166788c33c90ad7e78332c38de402c7104c1100",
+  "final_sha": "d34e1a6e2b37723e24e6d82f28566190dc3e67d2",
+  "state": "DONE_PENDING_MERGE",
+  "benchmark_id": "PFORG-MIG-TOP5",
+  "benchmark_progress": "ideabin-ai is the second of the five-repository ProjectFoundryOS migration cohort to reach a documented readiness verdict (READY_AFTER_OWNER_ACTION), following the same audit pattern (hazard inventory, reversible fixes, remaining owner actions, post-transfer validation, rollback) expected across the cohort. Cross-repo control-plane portability remains tracked separately in agent-mission-control's PFORG-MIG-AMC-005.",
+  "objective_readiness_verdict": "READY_AFTER_OWNER_ACTION",
+  "readiness_doc": "docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md",
+  "tests": {
+    "pnpm_test": "PASS - 91/91 (11/11 packages/core, 56/56 packages/ai-structuring, 24/24 apps/web)",
+    "pnpm_typecheck": "PASS - packages/core, packages/ai-structuring, apps/web all clean",
+    "method": "Ran the repository's own scripts directly (pnpm install --frozen-lockfile=false; pnpm typecheck; pnpm test; pnpm build) against the mission branch, matching the mission's stated acceptance commands. No CI workflow currently exists on main to compare against (see defects_found)."
+  },
+  "builds": {
+    "install": "PASS (pnpm install --frozen-lockfile=false)",
+    "typecheck": "PASS",
+    "test": "PASS",
+    "production_build": "PASS (tsc --noEmit for core/ai-structuring; next build succeeded for apps/web, all 10 routes generated)"
+  },
+  "defects_found": [
+    {
+      "id": "PFORG-MIG-IDEABIN-001-D1",
+      "severity": "info",
+      "category": "ci-hygiene",
+      "summary": "`.github/workflows/ci.yml` was already removed on main (commit d166788, 'Disable GitHub-hosted Actions on dormant repo') before this mission started. Not a transfer hazard (no org-specific content) and not something this mission's objective authorizes reversing, since it reflects the project's current PAUSED status rather than a migration break. Recorded in the readiness doc for transparency; acceptance commands were run directly instead of relying on CI."
+    },
+    {
+      "id": "PFORG-MIG-IDEABIN-001-D2",
+      "severity": "low",
+      "category": "build-hygiene",
+      "summary": "Running `pnpm install` regenerates a pnpm-lock.yaml diff and `next build` auto-rewrites apps/web/tsconfig.json (Next.js 16 reformatting/adding allowJs). Both are pre-existing drift unrelated to this mission's scope (the lockfile drift matches the already-recorded follow-up IDEA-REV-005-F2); both were reverted before committing so this PR stays scoped to migration-readiness content only. Not fixed here per 'fix only blockers/correctness/security; otherwise record for follow-up.'"
+    }
+  ],
+  "defects_fixed": [
+    {
+      "id": "PFORG-MIG-IDEABIN-001-F1",
+      "file": "docs/AGENT_LAUNCHER_PROMPT.md",
+      "summary": "Replaced hardcoded 'Repository: TheRealSynth/ideabin-ai' launcher instruction with a runtime-discovery instruction (git remote / GitHub context) plus a pointer to the readiness doc."
+    },
+    {
+      "id": "PFORG-MIG-IDEABIN-001-F2",
+      "file": "docs/DEPLOYMENT_VERCEL.md",
+      "summary": "Made the current-state note point-in-time, genericized the Vercel import instruction, and added an explicit note that a cross-org GitHub transfer does not automatically carry the Vercel Git integration."
+    },
+    {
+      "id": "PFORG-MIG-IDEABIN-001-F3",
+      "file": "docs/AGENT_QUEUE.md",
+      "summary": "Replaced hardcoded 'TheRealSynth/agent-mission-control' control-plane reference with a description plus a pointer to that repository's own migration tracking (PFORG-MIG-AMC-005)."
+    },
+    {
+      "id": "PFORG-MIG-IDEABIN-001-F4",
+      "file": "docs/PROMOTION_CONTRACT_V1.md",
+      "summary": "Replaced the hardcoded 'TheRealSynth/agent-mission-control' value in the canonical JSON example's existing_repo field with an explicit <owner>/agent-mission-control placeholder plus a one-line explanation."
+    }
+  ],
+  "blockers": [],
+  "changed_paths": [
+    "docs/AGENT_LAUNCHER_PROMPT.md",
+    "docs/AGENT_QUEUE.md",
+    "docs/DEPLOYMENT_VERCEL.md",
+    "docs/PROMOTION_CONTRACT_V1.md",
+    "docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md",
+    ".agent-results/PFORG-MIG-IDEABIN-001.json"
+  ],
+  "pr_number": null,
+  "pr_url": null,
+  "proposed_follow_up_missions": [
+    "PFORG-MIG-AMC-005 (agent-mission-control): land the control-plane repository registry/alias mechanism so control/PROJECTS.yaml's ideabin entry and the dispatcher's GitHub access resolve correctly across the staged, mixed-owner migration window.",
+    "Owner action: extend the Mission Control dispatcher's GitHub App/token scope to ProjectFoundryOS before or as part of the actual transfer, per docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md's remaining owner actions.",
+    "Small hygiene mission (pre-existing, non-blocking, out of this mission's scope): regenerate pnpm-lock.yaml to match packages/core/package.json devDependencies (IDEA-REV-005-F2 / PFORG-MIG-IDEABIN-001-D2)."
+  ],
+  "challenge_pass": {
+    "real_objective": "Make TheRealSynth/ideabin-ai safe to hand off to ProjectFoundryOS/ideabin-ai later -- without performing the transfer now -- by finding and fixing every reversible place the repository's own content assumes it will always be owned by TheRealSynth, while keeping true historical records true and keeping current product behavior/tests green.",
+    "hidden_assumptions": [
+      "That 'fix migration hazards' means the transfer should be simulated now by writing ProjectFoundryOS into the docs -- rejected, since the transfer has not happened and the mission explicitly forbids performing it.",
+      "That every string match for the org name is a hazard -- rejected for the one historical receipt (.agent-results/IDEA-REV-005.json), which is a forbidden_path and a true historical fact, not live configuration.",
+      "That this mission owns fixing agent-mission-control's own control/PROJECTS.yaml pointer to ideabin-ai -- rejected: that file lives outside owns_paths, in a different repository, and is the explicit subject of the sibling PFORG-MIG-AMC-005 mission.",
+      "That GitHub Actions being absent on main is a transfer-caused hazard -- rejected after checking commit history: it was deliberately removed for the project's PAUSED status one day before this mission, unrelated to migration."
+    ],
+    "obvious_path": "Grep the repository for every literal occurrence of 'TheRealSynth' and mechanically replace it with 'ProjectFoundryOS' everywhere, then declare the repository migrated.",
+    "optimized_path": "Grep the repository for 'TheRealSynth', but only rewrite occurrences that are live configuration/launcher instructions (not historical receipts/PR URLs in forbidden_paths), and only after distinguishing genuinely reversible repository-content hazards from GitHub-account-level hazards (GitHub App scope, Vercel Git integration, local clone remotes) that cannot be fixed by editing files at all.",
+    "non_obvious_path": "Instead of swapping one hardcoded org string (TheRealSynth) for another hardcoded org string (ProjectFoundryOS) that is not yet true, remove the org-name dependency from launcher/deployment/promotion-contract prose entirely: point agents/readers at runtime-resolvable identity (git remote / GitHub invocation context) plus a single canonical readiness document, mirroring the repository-registry/alias mechanism the sibling PFORG-MIG-AMC-005 mission is building for the control-plane repository itself.",
+    "cheapest_reversible_test": "A full recursive, read-only grep of the repository for 'TheRealSynth', 'github.com', 'vercel.com', and 'supabase.co' across all tracked file types, cross-checked against GitHub's PR/branch API (list_pull_requests) and commit history for hazards invisible to a plain file grep (e.g. CI configuration state, open PRs). Zero write risk, fully discriminates the hazard set before any edit is made.",
+    "alternate_access_surfaces": "Used the GitHub API (mcp__github__list_pull_requests, get_commit) in addition to the local git clone to see GitHub-side state not present in file contents: open PR #11 (unrelated, chatgpt/scoring-input-automation-design-v1, docs-only, does not touch migration-relevant files) and the prior day's CI-workflow-removal commit (d166788).",
+    "existing_assets_or_open_source": "Reused the sibling PFORG-MIG-AMC-005 mission's chosen mechanism (canonical repository registry / runtime discovery instead of global string replacement) for consistency across the five-repo cohort, rather than inventing an unrelated approach for this repository alone. Reused the existing .agent-results/IDEA-REV-005.json as the structural template for this result file, and AGENTS.md/docs/AI_HANDOFF.md's existing 'resolve current origin/main at runtime, old SHAs are historical evidence only' convention as the precedent for treating repository identity the same way.",
+    "human_in_loop_option": "The actual GitHub organization transfer, GitHub App/token re-authorization for the new org, Vercel project (re)connection, and updating remotes on other humans'/machines' existing local clones are all owner-executed or owner-gated actions that cannot and should not be automated by this mission; they are enumerated explicitly as 'Remaining owner actions' in the readiness doc rather than attempted.",
+    "recommendation": "Adopted the non-obvious path: removed hardcoded TheRealSynth assumptions from the 4 files where they functioned as live configuration/launcher instructions, left the one historical receipt untouched (forbidden_path + truthful history), and documented account-level hazards that no file edit can fix as explicit owner actions with a post-transfer validation checklist and a fully reversible rollback path.",
+    "assumptions_challenged": [
+      "Rejected writing 'ProjectFoundryOS/ideabin-ai' as present-tense fact into launcher/deployment docs today, since the transfer has not occurred and doing so would itself be false and out of this mission's authority.",
+      "Rejected treating the repository's committed files as the complete hazard surface; checked GitHub-side PR/branch/commit state via the API and found the CI-workflow removal and one unrelated open PR that a file-only grep would have missed context for.",
+      "Rejected fixing agent-mission-control's control/PROJECTS.yaml ideabin pointer from within this mission; that file is outside owns_paths and is the explicit subject of the sibling PFORG-MIG-AMC-005 mission (state READY, unassigned at time of writing).",
+      "Rejected editing the historical receipt .agent-results/IDEA-REV-005.json (contains a TheRealSynth PR URL); it is a forbidden_path and a true historical record, and GitHub preserves such URLs as redirects after a transfer."
+    ],
+    "route_comparison": [
+      {
+        "route": "obvious: global string replace TheRealSynth -> ProjectFoundryOS everywhere",
+        "tradeoffs": "Fast and simple, but writes a false present-tense fact (the repo is not transferred), silently touches the forbidden historical receipt if run blindly, and still leaves a second doc-edit pass required at the moment of actual cutover."
+      },
+      {
+        "route": "non-obvious (chosen): remove the org-name dependency from live/launcher/deployment prose in favor of runtime-resolved identity + one canonical readiness doc, matching the control-plane repo's own registry/alias approach",
+        "tradeoffs": "Slightly more editing effort per file and requires readers/agents to resolve identity at runtime instead of reading a literal string, but stays true both before and after the transfer, survives any future rename without another audit mission, and is consistent with the mechanism already chosen for the control-plane repository in PFORG-MIG-AMC-005."
+      }
+    ],
+    "material_difference": "The chosen route changes the actual mechanism, not just the wording: docs go from asserting a single fixed owner/repo string to deferring to a runtime-checkable source of truth (git remote / GitHub invocation context) plus one canonical pointer document. This changes the cost structure (zero additional edits needed at actual cutover or any future rename, versus a guaranteed second edit pass under the obvious route), the workflow (agents self-discover identity instead of trusting prose that can silently go stale during the cohort's staged, mixed-owner transfer window), and keeps the documentation truthful at every point in time rather than only after a transfer that has not happened yet.",
+    "validation_result": "Full-repository recursive grep for 'TheRealSynth' found exactly 6 hits before any edit: 5 in live documentation (now fixed) and 1 in the forbidden historical receipt (left untouched by design). A second grep for 'github.com | vercel.com | supabase.co | api.github' found only the same historical receipt's PR URL. After edits, re-running the grep confirms only intentional point-in-time/historical mentions remain (0 unintended hardcoded live assumptions). Confirmed the runtime-discovery mechanism is viable in practice: `git remote -v` and `git rev-parse` were used live in this very session to resolve exact repository identity without any hardcoded string. Ran pnpm install/typecheck/test/build against the edited branch: typecheck clean across all 3 TS packages, 91/91 tests passed, production build succeeded (10 routes). Reverted two incidental tool-generated diffs (pnpm-lock.yaml, apps/web/tsconfig.json) produced merely by running install/build locally, keeping the committed diff scoped to migration-readiness content only.",
+    "evidence_refs": [
+      "docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md (this mission's full hazard inventory, fixes, owner actions, validation checklist, rollback)",
+      "docs/AGENT_LAUNCHER_PROMPT.md, docs/DEPLOYMENT_VERCEL.md, docs/AGENT_QUEUE.md, docs/PROMOTION_CONTRACT_V1.md (edited files, see PR diff)",
+      ".agent-results/IDEA-REV-005.json (untouched forbidden_path / historical receipt containing the one remaining TheRealSynth reference, correctly left as-is)",
+      "commit d166788c33c90ad7e78332c38de402c7104c1100 ('Disable GitHub-hosted Actions on dormant repo') establishing that the CI-workflow absence predates and is unrelated to this mission",
+      "TheRealSynth/ideabin-ai PR #11 (open, unrelated, chatgpt/scoring-input-automation-design-v1) confirmed via GitHub API to not touch any migration-relevant path",
+      "TheRealSynth/agent-mission-control missions/agent-mission-control/PFORG-MIG-AMC-005.yaml (sibling mission building the control-plane repository registry/alias mechanism this mission's approach is kept consistent with)",
+      "control/PROJECTS.yaml 'ideabin' project entry (agent-mission-control repo) showing the control-plane's own hardcoded repo pointer, correctly out of this mission's owns_paths",
+      "pnpm test / pnpm typecheck / pnpm build output on branch claude/claude-seat-1/pforg-mig-ideabin-001 at commit d34e1a6e2b37723e24e6d82f28566190dc3e67d2 (91/91 tests, clean typecheck, successful production build)"
+    ]
+  },
+  "completed_at": "2026-09-07T20:45:00Z"
+}
