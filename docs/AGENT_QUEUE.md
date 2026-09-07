@@ -7,7 +7,12 @@ Agents must also obey `AGENTS.md`, `CLAUDE.md` when applicable, `docs/AI_HANDOFF
 ## Execution authority
 
 - IdeaBin repository: product requirements, architecture, mission specifications, tests, and implementation source of truth.
-- `TheRealSynth/agent-mission-control`: portfolio priority, mission activation, worker assignment, leases, path/resource conflict prevention, and execution reconciliation.
+- the Agent Mission Control control-plane repository (currently
+  `TheRealSynth/agent-mission-control`; that repository's own portability
+  fixes and the current canonical pointer are tracked there, not here — see
+  `docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md` for the cross-repo migration
+  status): portfolio priority, mission activation, worker assignment, leases,
+  path/resource conflict prevention, and execution reconciliation.
 - Agents must not self-select the next IdeaBin mission from this file when an Agent Mission Control mission exists for that work.
 - Manual/direct execution from this roadmap requires an explicit owner assignment or a demonstrated Mission Control outage/blocker.
 - GitHub `main` remains canonical for IdeaBin implementation state.

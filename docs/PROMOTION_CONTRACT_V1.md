@@ -69,6 +69,11 @@ Agent Mission Control MUST:
 
 ## Canonical payload example
 
+`existing_repo` below uses an illustrative `<owner>/...` placeholder rather
+than a fixed org, since Mission Control's own repository identity is subject
+to migration (see `docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md`); a real
+payload always carries the actual current owner/repo string.
+
 ```json
 {
   "protocol_version": 1,
@@ -105,7 +110,7 @@ Agent Mission Control MUST:
   "execution": {
     "mode": "VALIDATE",
     "repo_disposition": "existing_repo",
-    "existing_repo": "TheRealSynth/agent-mission-control",
+    "existing_repo": "<owner>/agent-mission-control",
     "first_benchmark": "Scan all active projects and independently verify five high-value repository matches.",
     "known_blockers": []
   },

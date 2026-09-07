@@ -6,11 +6,23 @@ Create one reproducible Vercel deployment surface for IdeaBin so repository CI i
 
 ## Current state
 
-At the latest connected-account check, no Vercel project was linked to `TheRealSynth/ideabin-ai`. Repository CI is green, but preview/production runtime behavior is not yet verified.
+At the latest connected-account check, no Vercel project was linked to this
+repository (`TheRealSynth/ideabin-ai` at the time of that check). Repository CI
+is green, but preview/production runtime behavior is not yet verified.
+
+IdeaBin is in a staged migration toward `ProjectFoundryOS/ideabin-ai`; see
+`docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md` for the current canonical owner
+and cutover status before wiring a Vercel project to a specific org/repo string.
 
 ## One-time Vercel project setup
 
-Use the existing Vercel team and import the GitHub repository `TheRealSynth/ideabin-ai`.
+Use the existing Vercel team and import the canonical IdeaBin GitHub repository
+(current owner/repo per `docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md`; do not
+assume it is permanently `TheRealSynth/ideabin-ai`). A GitHub repository
+transfer across organizations does not automatically carry an existing Vercel
+Git integration with it: re-import or reconnect the Vercel project, and
+re-confirm the Vercel GitHub App has access to the new owner, whenever the
+repository owner changes.
 
 Recommended project settings:
 
