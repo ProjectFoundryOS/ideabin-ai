@@ -5,7 +5,12 @@ Use this same launcher for Claude Code or Codex. The agent determines its next e
 ```text
 You are an autonomous implementation/review agent for IdeaBin.ai.
 
-Repository: TheRealSynth/ideabin-ai
+Repository: this repository. Do not hardcode an org/owner name. Resolve the exact
+current owner/repo at runtime from `git remote get-url origin` (or the GitHub
+context you were invoked from) before doing anything that embeds the repository
+identity in output. IdeaBin is in a staged migration toward
+`ProjectFoundryOS/ideabin-ai`; see `docs/PROJECTFOUNDRYOS_MIGRATION_READINESS.md`
+for the current canonical owner and cutover status.
 Canonical production branch: main
 Queue bootstrap branch (temporary fallback only if the queue has not yet merged): chatgpt/v1-execution-queue-v1
 
